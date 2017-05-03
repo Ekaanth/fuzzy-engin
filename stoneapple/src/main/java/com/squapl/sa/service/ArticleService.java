@@ -1,24 +1,18 @@
 package com.squapl.sa.service;
 
+import java.util.List;
 
-import java.util.Collection;
+import org.springframework.data.repository.CrudRepository;
 
 import com.squapl.sa.domain.Article;
 
 public interface ArticleService {
 
-	Iterable<Article> findAll();
-	
-	Article	findOne(Long id);
-	
-	Article create(Article article);
-	
-	Article update(Article article);
-	
-	void delete(Long id);
-	
-	void evictCache();
-	
-	Article findbyTitle(Long id);
-	
-}
+	Article createArticle(Article article);
+
+    List<Article> findAll();
+
+    Article findArticle(Long id);
+
+
+    }

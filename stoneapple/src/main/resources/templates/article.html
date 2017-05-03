@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/header :: common-header"/>
+<body roleId="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+<head th:replace="common/header :: navbar"/>
+<div class="container main">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Schedule An Appointment</h3>
+            <form th:action="@{/api/article/create}" method="post" id="articleForm">
+                <input type="hidden" name="id" th:value="${article.idarticle}"/>
+
+					<div class="form-group">
+                    <label for="recipientName">Name</label>
+                    <input type="text" class="form-control" th:value="${article.articlename}" name="name"
+                           id="articleName" placeholder="Name"/>
+                </div>
+					
+					 <select class="tags-select form-control" multiple="multiple" style="width: 200px;">
+ 			 <option value="tag1" selected="selected">tag1</option>
+ 			 <option value="tag2" selected="selected">tag2</option>
+		   </select>
+
+
+                <input type="hidden"
+                       name="${_csrf.parameterName}"
+                       value="${_csrf.token}"/>
+
+                <a class="btn btn-primary" id="submitArticle">Submit </a>
+            </form>
+
+            <div class="col-md-6">
+            </div>
+        </div>
+    </div>
+    <br/>
+</div>
+<div class="row">
+        <h3>List of Articles</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                <tr>
+                    <th>Article Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-th-each="eachArticle : ${articleList}">
+                    <td><a data-th-text="${eachArticle.articlename}" th:href="@{/api/article/edit?articleName=}+${eachArticle.articlename}">...</a></td>
+               
+                    <td><a th:href="@{/api/article/delete?articleName=}+${eachArticle.articlename}">delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+<div th:replace="common/header :: body-bottom-scripts"></div>
+
+ <script>
+//<![CDATA[
+$(".tags-select").select2({
+  // enable tagging
+  tags: true,
+    
+  // max tags is 3
+  maximumSelectionLength: 3,
+    
+  // loading remote data
+  // see https://select2.github.io/options.html#ajax
+  ajax: {
+    url: "https://api.myjson.com/bins/444cr",
+    processResults: function (data, page) {
+      return {
+        results: data
+      };
+    }
+  }
+});
+//]]>
+</script>
+
+</body>
+</html>

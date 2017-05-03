@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/header :: common-header"/>
+<body roleId="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+<head th:replace="common/header :: navbar"/>
+<div class="container main">
+    <div class="row">
+    <div class="main-center ">
+                <div class="bg-danger" th:if="${param.error}">
+                   invalid date
+                </div>
+                </div>
+        <div class="col-md-6">
+            <h3>Recipient Information</h3>
+            <form th:action="@{/api/campaign/save}" method="POST" enctype="multipart/form-data" >
+                <input type="hidden" name="id" th:value="${campaign.id}" />
+
+                <div class="form-group">
+                    <label for="recipientName">Name</label>
+                    <input type="text" class="form-control" th:value="${campaign.name}" name="name"
+                           id="campaignName" placeholder="Name"/>
+                </div>
+                
+                <div class="form-group">
+                    <label for="recipientName">Description</label>
+                    <input type="text" class="form-control" th:value="${campaign.description}" name="description"
+                           id="campaignDescription" placeholder="description(150 char)"/>
+                </div>
+                
+                <div class="form-group">
+                    <label for="recipientName">Website Links</label>
+                    <input type="text" class="form-control" th:value="${campaign.link}" name="link"
+                           id="campaignLink" placeholder="Link (optional)"/>
+                </div>
+                
+                  <div class="form-group">
+                   <label for="recipientName">Image Upload</label>
+                	<input type="file" name="file"/>
+                </div>
+                
+                
+                
+                  <div class="form-group">
+                    <label for="location">Preference :</label>
+                    <select class="form-control" th:value="${campaign.preference}" name="preference" id="preference">
+                        <option disabled="disabled" selected="selected" > -- select the preference --</option>
+                        <option>Image</option>
+                        <option>Video</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="dateString">Pick a Start Date and Time:</label>
+                    <div class="input-append date form_datetime input-group" data-date="2016-10-21T15:25:00Z">
+                        <input class="form-control" type="text" value="" readonly="readonly"
+                               th:value="${startDate}" name="startDate"
+                               id="startDate" required="required"/>
+                        <span class="input-group-addon"><i class="fa fa-times" aria-hidden="true"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                    </div>
+                </div>
+
+				<div class="form-group">
+                    <label for="dateString">Pick a End Date and Time:</label>
+                    <div class="input-append date form_datetime input-group" data-date="2016-10-21T15:25:00Z">
+                        <input class="form-control" type="text" value="" readonly="readonly"
+                               th:value="${endDate}" name="endDate"
+                               id="endDate" required="required"/>
+                        <span class="input-group-addon"><i class="fa fa-times" aria-hidden="true"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                    </div>
+                </div>
+                <br/><br/>
+                
+              
+           <select class="tags-select form-control" multiple="multiple" style="width: 200px;">
+ 			 <option value="tag1" selected="selected">tag1</option>
+ 			 <option value="tag2" selected="selected">tag2</option>
+		   </select>
+                <br/><br/>
+                
+
+                <input type="hidden"
+                       name="${_csrf.parameterName}"
+                       value="${_csrf.token}"/>
+
+                <button class="btn btn-primary" type="submit">Add/Edit Campaign</button>
+            </form>
+
+            <div class="col-md-6">
+            </div>
+          
+        </div>
+    </div>
+    <br/>
+    
+
+
+    <div class="one-third">
+        <h3>List of Campaigns</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                <tr>
+                    <th>Campaign Name</th>
+                 </tr>
+                </thead>
+                <tbody>
+                <tr data-th-each="eachCampaign : ${campaignList}">
+                    <td><a data-th-text="${eachCampaign.name}"  th:onclick="'getPropId(this.value);'">...</a></td>
+                    <td><a th:href="@{/api/campaign/delete?campaignName=}+${eachCampaign.name}">delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+  
+    <div class="wrapper">
+    <div class = "one-third">
+    <p id="name"></p>
+    <p id="hello"></p>
+    <p> hello </p>
+    </div>
+    </div>
+</div>
+
+
+<div th:replace="common/header :: body-bottom-scripts"></div>
+ <script>
+//<![CDATA[
+$(".tags-select").select2({
+  // enable tagging
+  tags: true,
+    
+  // max tags is 3
+  maximumSelectionLength: 3,
+    
+  // loading remote data
+  // see https://select2.github.io/options.html#ajax
+  ajax: {
+    url: "https://api.myjson.com/bins/444cr",
+    processResults: function (data, page) {
+      return {
+        results: data
+      };
+    }
+  }
+});
+//]]>
+</script>
+</body>
+</html>

@@ -100,16 +100,13 @@ public class Loaders {
 	
 
 		List<Facebook> feeds = new ArrayList<>();
-		
-    	System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		 URL url = null;
 		try {
 			url = new URL("https://graph.facebook.com/v2.9/squaplmagazine?fields=feed.limit(25)&access_token=877133062459892%7Cx7-ySGYaS7V28HYEeCHozRbkKFc");
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-	     System.out.println(url);   
+		}   
 		 InputStreamReader reader = null;
 		try {
 			reader = new InputStreamReader(url.openStream());
@@ -118,16 +115,11 @@ public class Loaders {
 			e.printStackTrace();
 		}
 		FacebookFeeds facebookjson = new Gson().fromJson(reader, FacebookFeeds.class);
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>");
 		Feed f = facebookjson.getFeed();
-		System.out.println(f);
-		System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 		Data[] data = f.getData();
-		System.out.println(data);
-		System.out.println("IIIIIIIIIIIIIIIIIIIIIIIIIIII");
 		for(Data d : data){
-			System.out.println(d.getId());
-			System.out.println(d.getMessage());
+			//System.out.println(d.getId());
+			//System.out.println(d.getMessage());
 			feeds.add(new Facebook(d.getId(), d.getMessage(), d.getCreated_time()));
 		}
 		
@@ -137,15 +129,13 @@ public class Loaders {
 	private List<YoutubeElasticsearch> getData(String search) {
     	
     	 List<YoutubeElasticsearch> videolist = new ArrayList<>();
-    	System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		 URL url = null;
 		try {
 			url = new URL("https://www.googleapis.com/youtube/v3/search?part=snippet&fields=items(id,snippet)&q="+search+"&regionCode=In&maxResults=25&key=AIzaSyDHsEchtvchZpilJNf_jizUnxNjM15KFYg");
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-	     System.out.println(url);   
+		} 
 		 InputStreamReader reader = null;
 		try {
 			reader = new InputStreamReader(url.openStream());
@@ -154,9 +144,7 @@ public class Loaders {
 			e.printStackTrace();
 		}
 		MainYoutube mainjson = new Gson().fromJson(reader, MainYoutube.class);
-	      System.out.println("11111111111111111111111111111");
-    	Items[] item = mainjson.getItems();
-    	System.out.println("222222222222222222222222222222222222");
+		Items[] item = mainjson.getItems();
     	for(Items it :item){
     		//System.out.println("33333333333333333333");
     		Id id = it.getId();
@@ -179,7 +167,6 @@ public class Loaders {
  				// TODO Auto-generated catch block
  				e.printStackTrace();
  			}
- 		     System.out.println(url1);   
  			 InputStreamReader reader1 = null;
  			try {
  				reader1 = new InputStreamReader(url1.openStream());
@@ -209,7 +196,6 @@ public class Loaders {
  		    	 videolist.add(new YoutubeElasticsearch(id.getVideoId(), snip.getPublishedAt(), snip.getPublishedAt(), snip.getTitle(), snip.getDescription(), "kjbjk", snip.getChannelTitle(),like , dislike, comment, view, favorite));
  		      }
     	}
-    	System.out.println(videolist);
 		return videolist;
     }
 }
