@@ -23,8 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.squapl.sa.domain.Campaign;
+import com.squapl.sa.domain.CampaignTags;
 import com.squapl.sa.jparepository.CampaignRep;
 import com.squapl.sa.service.TransactionService;
+import com.squapl.sa.service.UserServiceImpl.CampaignTagService;
 
 @Controller
 @RequestMapping("/api")
@@ -35,11 +37,15 @@ public class CampaignController {
 	CampaignRep campaignRep;
 	
 	@Autowired
+	CampaignTagService campaignTagService;
+	
+	@Autowired
     private TransactionService transactionService;	
 
 	// private static String UPLOADED_FOLDER = "E://temp//";
-	 private static String UPLOADED_FOLDER = "C://Users//abhishek//Documents//GitHub//stoneapple//src//main//resources//static//images//";
+	 //private static String UPLOADED_FOLDER = "C://Users//abhishek//Documents//GitHub//stoneapple//src//main//resources//static//images//";
 	 // C:\Users\abhishek\Documents\GitHub\stoneapple\src\main\resources\static\images\
+	private static String UPLOADED_FOLDER ="C://Apache24//htdocs//img";
 	
 	@RequestMapping(value = "/campaign", method = RequestMethod.GET)
     public String recipient(Model model, Principal principal) {
@@ -50,16 +56,20 @@ public class CampaignController {
         
         Campaign campaign = new Campaign();
 
+//        CampaignTags tags = new CampaignTags();
+//        List<CampaignTags> tagsList = campaignTagService.findCampaignTagList(principal);
         model.addAttribute("campaignList", campaignList);
         model.addAttribute("campaign", campaign);
         model.addAttribute("image", "");
+//        model.addAttribute("tags", tags);
+//        model.addAttribute("$tagsList", tagsList);
 
         return "campaign";
     }
 
     @RequestMapping(value = "/campaign/save", method = RequestMethod.POST)
     public String campaignPost(@ModelAttribute("campaign") Campaign campaign, @ModelAttribute("startDate") String startdate, 
-    		@ModelAttribute("endDate") String enddate, @RequestParam("file") MultipartFile image,Principal principal) throws ParseException {
+    		@ModelAttribute("endDate") String enddate,@RequestParam("tags") String tags,@RequestParam("file") MultipartFile image,Principal principal) throws ParseException {
     	
     File file = new File(UPLOADED_FOLDER+"//"+campaign.getName());
     String UPLOAD = file.toString();
@@ -87,10 +97,12 @@ public class CampaignController {
           String finalImagePath = imagePath.toString();
          // String finalvideoPath = videoPath.toString();
           
-    	campaign.setImage(finalImagePath);
+          String uploadImagePath = finalImagePath.replace('\\', '/').substring(18,finalImagePath.length());
+    	campaign.setImage(uploadImagePath);
+System.out.println(">>>>>>>>>>>");
+   	System.out.println(tags);
     	//campaign.setVideo(finalvideoPath);
-    	
-    	
+//    	campaign.setTags(tags.toString());
     	 SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd hh:mm");
          Date d1 = format1.parse( startdate );
          campaign.setStartdate(d1);

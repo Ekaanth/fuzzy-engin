@@ -21,8 +21,7 @@ public class Campaign {
     private String preference;
     private Date startdate;
     private Date enddate;
-    
-     
+    private String tags;
 	public Long getId() {
 		return id;
 	}
@@ -77,9 +76,21 @@ public class Campaign {
 	public void setEnddate(Date enddate) {
 		this.enddate = enddate;
 	}
+	public String getTags() {
+		return tags;
+	}
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+	@Override
+	public String toString() {
+		return "Campaign [id=" + id + ", name=" + name + ", description=" + description + ", link=" + link + ", image="
+				+ image + ", video=" + video + ", preference=" + preference + ", startdate=" + startdate + ", enddate="
+				+ enddate + ", tags=" + tags + "]";
+	}
 	public Campaign(Long id, String name, String description, String link, String image, String video,
-			String preference, Date startdate, Date enddate) {
-	
+			String preference, Date startdate, Date enddate, String tags) {
+		
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -89,12 +100,7 @@ public class Campaign {
 		this.preference = preference;
 		this.startdate = startdate;
 		this.enddate = enddate;
-	}
-	@Override
-	public String toString() {
-		return "Campaign [id=" + id + ", name=" + name + ", description=" + description + ", link=" + link + ", image="
-				+ image + ", video=" + video + ", preference=" + preference + ", startdate=" + startdate + ", enddate="
-				+ enddate + "]";
+		this.tags = tags;
 	}
     
 	public Campaign(){

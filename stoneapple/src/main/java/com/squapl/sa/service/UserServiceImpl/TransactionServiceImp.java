@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.squapl.sa.domain.Campaign;
+import com.squapl.sa.domain.CampaignTags;
 import com.squapl.sa.jparepository.CampaignRep;
+import com.squapl.sa.jparepository.CampaignTagsDao;
 import com.squapl.sa.service.TransactionService;
 
 
@@ -17,6 +19,7 @@ public  class TransactionServiceImp implements TransactionService {
 
 	@Autowired
     CampaignRep campaignRep;
+	
 	
 	
 	
@@ -42,6 +45,7 @@ public  class TransactionServiceImp implements TransactionService {
     public void deleteCampaignByName(String campaignName) {
     	campaignRep.deleteByName(campaignName);
     }
+
 
 	
 

@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.List;
 
 import com.squapl.sa.domain.Campaign;
+import com.squapl.sa.domain.CampaignTags;
 
 public interface TransactionService {
     
@@ -14,6 +15,8 @@ public interface TransactionService {
     Campaign findCampaignByName(String campaignName);
   
     void deleteCampaignByName(String campaignName);
+
+	
 
     
 }

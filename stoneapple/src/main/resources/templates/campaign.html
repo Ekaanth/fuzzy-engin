@@ -73,10 +73,11 @@
                 <br/><br/>
                 
               
-           <select class="tags-select form-control" multiple="multiple" style="width: 200px;">
- 			 <option value="tag1" selected="selected">tag1</option>
- 			 <option value="tag2" selected="selected">tag2</option>
-		   </select>
+           
+ 			         <select class="tags-select form-control" multiple="multiple" style="width: 200px;" name="tags">
+		  <option value="tag1" selected="selected">tag1</option>
+		  <option value="tag2" selected="selected">tag2</option>
+		</select>
                 <br/><br/>
                 
 
@@ -103,11 +104,13 @@
                 <thead>
                 <tr>
                     <th>Campaign Name</th>
+                    <th>image</th>
                  </tr>
                 </thead>
                 <tbody>
                 <tr data-th-each="eachCampaign : ${campaignList}">
                     <td><a data-th-text="${eachCampaign.name}"  th:onclick="'getPropId(this.value);'">...</a></td>
+                    <td><img th:src="${eachCampaign.image}" width="50px" height="30px"/></td>
                     <td><a th:href="@{/api/campaign/delete?campaignName=}+${eachCampaign.name}">delete</a></td>
                 </tr>
                 </tbody>
@@ -130,20 +133,31 @@
 //<![CDATA[
 $(".tags-select").select2({
   // enable tagging
-  tags: true,
+  tag: true,
     
   // max tags is 3
-  maximumSelectionLength: 3,
+  maximumSelectionLength: 5,
     
   // loading remote data
   // see https://select2.github.io/options.html#ajax
   ajax: {
-    url: "https://api.myjson.com/bins/444cr",
-    processResults: function (data, page) {
-      return {
-        results: data
-      };
-    }
+	  url:"http://localhost/tag/all",
+	  dataType: 'json',
+	  data:function(term){
+		  return{
+			  term:term
+		  };
+	  },
+	  processResults: function (data) {
+	        return {
+	            results: $.map(data, function (item) {
+	                return {
+	                    text: item.tags,
+	                    id: item.tags
+	                }
+	            })
+	        };
+	    }
   }
 });
 //]]>
