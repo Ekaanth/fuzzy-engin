@@ -19,11 +19,11 @@ public class CampaignTagService {
 
 	public List<CampaignTags> findall() {
 		// TODO Auto-generated method stub
-		return campaigntagsdao.findAll();
+		return (List<CampaignTags>) campaigntagsdao.findAll();
 	}
 
 	public List<CampaignTags> findCampaignTagList(Principal principal) {
-		 List<CampaignTags> tagsList = campaigntagsdao.findAll();
+		 List<CampaignTags> tagsList = (List<CampaignTags>) campaigntagsdao.findAll();
 		return tagsList;
 	}
 	

@@ -1,5 +1,8 @@
 package com.squapl.sa.web.api;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,20 +14,15 @@ import com.squapl.sa.domain.Article;
 import com.squapl.sa.service.ArticleService;
 
 @Controller
-@RequestMapping("/api/article")
+@RequestMapping("/article")
 public class Articlecontroller {
 
 	@Autowired
 	private ArticleService articleService;
 	
-	@RequestMapping(value = "/create",method = RequestMethod.GET)
+	@RequestMapping(value = "/list",method = RequestMethod.GET)
     public String createArticle(Model model) {
+		return null;
        
-		Article article = new Article();
-		
-		model.addAttribute("article", article);
-		
-        return "article";
-    }
-	
+	}
 }

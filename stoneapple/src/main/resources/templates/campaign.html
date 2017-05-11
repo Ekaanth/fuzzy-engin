@@ -10,7 +10,7 @@
                    invalid date
                 </div>
                 </div>
-        <div class="col-md-6">
+        <div class="one-third">
             <h3>Recipient Information</h3>
             <form th:action="@{/api/campaign/save}" method="POST" enctype="multipart/form-data" >
                 <input type="hidden" name="id" th:value="${campaign.id}" />
@@ -41,7 +41,7 @@
                 
                 
                   <div class="form-group">
-                    <label for="location">Preference :</label>
+                    <label for="location">Preference :</label> 
                     <select class="form-control" th:value="${campaign.preference}" name="preference" id="preference">
                         <option disabled="disabled" selected="selected" > -- select the preference --</option>
                         <option>Image</option>
@@ -71,16 +71,25 @@
                     </div>
                 </div>
                 <br/><br/>
+                                
                 
-              
-           
- 			         <select class="tags-select form-control" multiple="multiple" style="width: 200px;" name="tags">
-		  <option value="tag1" selected="selected">tag1</option>
-		  <option value="tag2" selected="selected">tag2</option>
-		</select>
+                <div class="form-group blu-margin">
+                <label for="category">Pick category:</label>
+				    <select class="form-control" th:value="${campaign.category}" id="category" name="category" onchange="change()">
+				    <option th:each="eachCategory : ${category}" th:value="${eachCategory.categoryname}" th:text="${eachCategory.categoryname}"></option>
+				    </select>
+				</div>
+					
+					
+				<select class="tags-select form-control" multiple="multiple" style="width: 200px;" name="tags">
+		 			 <option value="tag1" selected="selected">tag1</option>
+		 			 <option value="tag2" selected="selected">tag2</option>
+				</select>
+				
                 <br/><br/>
-                
-
+					
+					<input type="hidden" name="state" value="Inactive" />
+				
                 <input type="hidden"
                        name="${_csrf.parameterName}"
                        value="${_csrf.token}"/>
@@ -88,14 +97,19 @@
                 <button class="btn btn-primary" type="submit">Add/Edit Campaign</button>
             </form>
 
-            <div class="col-md-6">
-            </div>
+            
           
         </div>
-    </div>
+   
     <br/>
     
-
+    
+    <div class="one-third">
+            <img src="" id="prev" width="300px" height="300px"/>
+            <br/>
+			<div id="Displaytitle"></div>
+    </div> 
+ </div>
 
     <div class="one-third">
         <h3>List of Campaigns</h3>
@@ -118,30 +132,52 @@
         </div>
     </div>
   
-    <div class="wrapper">
-    <div class = "one-third">
-    <p id="name"></p>
-    <p id="hello"></p>
-    <p> hello </p>
-    </div>
-    </div>
+   
 </div>
 
 
 <div th:replace="common/header :: body-bottom-scripts"></div>
  <script>
+
+ $(document).ready(function(){
+	 $('#preview').hide();
+	 $("#campaignDescription").keypress(update);
+	 });
+
+	 function update(){
+
+	 $('#preview').slideDown('slow');
+	 var title = $("#campaignDescription").val();
+	 $('#Displaytitle').html(title);
+	
+	 }
+
+ var reader = new FileReader();
+ reader.onload = function(r_event) {
+   document.getElementById('prev').setAttribute('src', r_event.target.result);
+ }
+
+ document.getElementsByName('file')[0].addEventListener('change', function(event) {
+     reader.readAsDataURL(this.files[0]);
+ });
+ 
+ 
+ function change(){
+	 var val = document.getElementById("category").value;
+	 alert(val);
+
 //<![CDATA[
 $(".tags-select").select2({
   // enable tagging
   tag: true,
-    
+
   // max tags is 3
-  maximumSelectionLength: 5,
-    
+  maximumSelectionLength: 3,
+  
   // loading remote data
   // see https://select2.github.io/options.html#ajax
   ajax: {
-	  url:"http://localhost/tag/all",
+	  url:"http://localhost:8080/category/"+val,
 	  dataType: 'json',
 	  data:function(term){
 		  return{
@@ -152,8 +188,8 @@ $(".tags-select").select2({
 	        return {
 	            results: $.map(data, function (item) {
 	                return {
-	                    text: item.tags,
-	                    id: item.tags
+	                    text: item.tagsname,
+	                    id: item.tagsname
 	                }
 	            })
 	        };
@@ -161,6 +197,7 @@ $(".tags-select").select2({
   }
 });
 //]]>
+ }
 </script>
 </body>
 </html>

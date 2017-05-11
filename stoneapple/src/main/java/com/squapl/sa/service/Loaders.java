@@ -49,9 +49,6 @@ public class Loaders {
     
     @Autowired
     FacebookElasticRepository facebook;
-//    @Autowired 
-//    com.squapl.sa.domain.UsersRepository domainUsersRegistory;
-//    com.squapl.sa.domain.Users domainUsers;
 
     @PostConstruct
     @Transactional
@@ -81,7 +78,7 @@ public class Loaders {
         	search="dinner";
         }
         
-        elasticeRepository.save(getData(search));
+       elasticeRepository.save(getData(search));
         System.out.printf("Youtube Loading Completed");
         
         

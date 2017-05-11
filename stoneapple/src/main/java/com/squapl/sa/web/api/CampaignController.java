@@ -22,11 +22,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.squapl.sa.domain.Appointment;
 import com.squapl.sa.domain.Campaign;
-import com.squapl.sa.domain.CampaignTags;
+import com.squapl.sa.domain.Category;
 import com.squapl.sa.jparepository.CampaignRep;
+import com.squapl.sa.service.Categoryservice;
 import com.squapl.sa.service.TransactionService;
-import com.squapl.sa.service.UserServiceImpl.CampaignTagService;
 
 @Controller
 @RequestMapping("/api")
@@ -36,8 +37,10 @@ public class CampaignController {
 	@Autowired
 	CampaignRep campaignRep;
 	
+	
+	
 	@Autowired
-	CampaignTagService campaignTagService;
+	Categoryservice categoryservice;
 	
 	@Autowired
     private TransactionService transactionService;	
@@ -53,7 +56,7 @@ public class CampaignController {
         model.addAttribute("startDate", "");
         model.addAttribute("endDate", "");
       
-        
+        List<Category> categoryList = categoryservice.findCategoryList(principal);
         Campaign campaign = new Campaign();
 
 //        CampaignTags tags = new CampaignTags();
@@ -63,6 +66,8 @@ public class CampaignController {
         model.addAttribute("image", "");
 //        model.addAttribute("tags", tags);
 //        model.addAttribute("$tagsList", tagsList);
+        
+        model.addAttribute("category", categoryList);
 
         return "campaign";
     }
@@ -157,6 +162,16 @@ System.out.println(">>>>>>>>>>>");
         return "campaign";
     }
 	
+    @RequestMapping(value = "/show",method = RequestMethod.GET)
+    public String showAppointment(Model model, Principal principal) {
+    	
+    	List<Campaign> campaignList = transactionService.findCampaignList(principal);
+    	
+    	model.addAttribute("campaignList", campaignList);
+
+
+        return "showcampaign";
+    }
 	
 	
 }

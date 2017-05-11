@@ -2,8 +2,6 @@ package com.squapl.sa.service;
 
 import java.util.List;
 
-import org.springframework.data.repository.CrudRepository;
-
 import com.squapl.sa.domain.Article;
 
 public interface ArticleService {
@@ -13,6 +11,10 @@ public interface ArticleService {
     List<Article> findAll();
 
     Article findArticle(Long id);
+  
+    List<Article> findByStatus(String status);
+
+	//List<Article> findbystatuslanguage(String string, String string2);
 
 
     }

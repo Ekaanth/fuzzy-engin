@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/header :: common-header"/>
+<body roleId="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+<head th:replace="common/header :: navbar"/>
+
+
+
+<h1>The number of approved article = <a th:text="${totalApprovedArticle}"></a> </h1>
+
+<h1>The number of approved article in English = <a href="#" th:text="${approvedEnglsih}"></a> </h1>
+<h1>The number of approved article in Tamil = <a href="#" th:text="${approvedTamil}"></a> </h1>
+
+
+<h1>The number of pending articles =  <a th:text="${totalPendingArticle}"></a></h1>
+
+<h1>The number of English article pending = <a href="#" th:text="${pendingEnglsih}"></a> </h1>
+<h1>The number of Tamil article  pending= <a href="#" th:text="${pendingTamil}"></a> </h1>
+
+<div th:replace="common/header :: body-bottom-scripts"> </div>
+
+
+</body>
+</html>

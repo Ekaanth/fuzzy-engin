@@ -1619,6 +1619,12 @@ pre code {
  float: left;
 }
 
+.one-third-margin {
+    azimuth :center;
+    margin-left: 40px;
+  width : 50%;
+ float: left;
+}
 .wrapper{
 	width: 500px;
 	height: 500px;

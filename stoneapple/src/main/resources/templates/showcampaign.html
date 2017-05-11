@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/header :: common-header"/>
+<body roleId="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+<head th:replace="common/header :: navbar"/>
+
+
+<div class="one-third">
+        <h3>List of Campaigns</h3>
+        <div class="table-responsive">
+           <table id="example" class="table table-bordered table-hover table-striped">
+                <thead>
+                <tr>
+                    <th>Campaign Name</th>
+                    <th>image</th>
+                   <th>Campaign Description</th>
+                 </tr>
+                </thead>
+                <tbody>
+                <tr data-th-each="eachCampaign : ${campaignList}">
+                    <td><a data-th-text="${eachCampaign.name}" th:onclick="'getPropId(this.value);'">...</a></td>
+                    <td><img th:src="${eachCampaign.image}" width="50px" height="30px"/></td>
+                    <td data-th-text="${eachCampaign.description}">...</td>
+                    <td><button class="btn btn-default" th:onclick="'doSomething(\''+${eachCampaign.name}+ '\',\''+${eachCampaign.description}+'\',\''+${eachCampaign.image}+'\');'">preview</button> </td>
+                    <td><a th:href="@{/api/campaign/delete?campaignName=}+${eachCampaign.name}">delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+  
+  <div class="one-third-margin">
+ <br/><br/>
+   <h3>Preview</h3>
+    		<div id="name"></div>
+            <img src="image" id="image" width="300px" height="300px"/>
+            <br/>
+			<div id="description"></div>
+    </div> 
+</div>
+ 
+    
+    <div th:replace="common/header :: body-bottom-scripts"></div>
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable();
+    } );
+    
+    function doSomething(name,description,image){
+    	var title = name;
+    	var des =description;
+    	var img =image;
+    	document.getElementById("name").innerHTML = title;
+    	document.getElementById("description").innerHTML = des;
+    	document.getElementById("image").innerHTML = img;
+    } 
+</script>
+    
+</body>
+</html>

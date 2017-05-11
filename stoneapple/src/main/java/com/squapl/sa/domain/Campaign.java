@@ -22,6 +22,8 @@ public class Campaign {
     private Date startdate;
     private Date enddate;
     private String tags;
+    private String category;
+    private String state;
 	public Long getId() {
 		return id;
 	}
@@ -82,14 +84,26 @@ public class Campaign {
 	public void setTags(String tags) {
 		this.tags = tags;
 	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
 	@Override
 	public String toString() {
 		return "Campaign [id=" + id + ", name=" + name + ", description=" + description + ", link=" + link + ", image="
 				+ image + ", video=" + video + ", preference=" + preference + ", startdate=" + startdate + ", enddate="
-				+ enddate + ", tags=" + tags + "]";
+				+ enddate + ", tags=" + tags + ", category=" + category + ", state=" + state + "]";
 	}
 	public Campaign(Long id, String name, String description, String link, String image, String video,
-			String preference, Date startdate, Date enddate, String tags) {
+			String preference, Date startdate, Date enddate, String tags, String category, String state) {
 		
 		this.id = id;
 		this.name = name;
@@ -101,11 +115,14 @@ public class Campaign {
 		this.startdate = startdate;
 		this.enddate = enddate;
 		this.tags = tags;
+		this.category = category;
+		this.state = state;
 	}
     
 	public Campaign(){
-		
 	}
+    
+	
 	
 }
 
